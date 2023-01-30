@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from './src/components/Home';
 import Details from './src/components/Details';
 
-export default function App() {
+export default function App() { 
 
   const Stack = createNativeStackNavigator()
 

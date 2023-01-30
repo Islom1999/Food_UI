@@ -4,8 +4,10 @@ import { Categories, COLORS } from '../database/items'
 import Material from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import Entypo from 'react-native-vector-icons/Entypo'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const Home = () => {
+const Home = ({navigation}) => {
 
     const [currentSelected ,setCurrentSelected] = useState(0)
 
@@ -47,6 +49,19 @@ const Home = () => {
         return(
             <TouchableOpacity 
                 key={index}
+                activeOpacity={0.9}
+                onPress={() => navigation.push('details', {
+                    name: data.name,
+                    price: data.price,
+                    image: data.image,
+                    size: data.size,
+                    crust: data.crust,
+                    delivery: data.delivery,
+                    ingredients: data.ingredients,
+                    isTopOfTheWeek: data.isTopOfTheWeek,
+                    rating: data.rating,
+                    navigation: navigation,
+                })}
                 style={{
                     width: '100%',
                     height: 180,
@@ -67,12 +82,58 @@ const Home = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            display: data.isTopOfTheWeek
+                            display: data.isTopOfTheWeek ? 'flex' : 'none',
                         }}>
                             <FontAwesome5 name='crown' style={{fontSize: 10, color: COLORS.accent}} />
                             <Text 
                                 style={{fontSize:12, color: COLORS.black, opacity: 0.8, marginLeft: 5
                             }}>top to the week</Text>
+                        </View>
+                        <Text style={{
+                            fontSize:22, fontWeight: 'bold', color: COLORS.black, 
+                            paddingTop: 10,
+                        }}>{data.name}</Text>
+                        <Text style={{
+                            fontSize:12, color: COLORS.black, 
+                            opacity: 0.5,
+                        }}>{data.weight}</Text>
+                    </View>
+                    <View style={{
+                        width: 150,
+                        height: 150,
+                        marginRight: -45,
+                    }}>
+                        <Image style={{
+                            width: '100%',
+                            height: '100%',
+                            resizeMode: 'contain'
+                        }} source={data.image}/>
+                    </View>
+                    <View style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left:0,
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+                        <View style={{
+                            width: 85,
+                            height: 50,
+                            backgroundColor: COLORS.accent,
+                            borderTopRightRadius:20,
+                            borderBottomLeftRadius:20,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <Entypo name='plus' color={COLORS.black} size={18}/>
+                        </View>
+                        <View style={{
+                            flexDirection:'row',
+                            marginLeft: 20,
+                            alignContent: 'center'
+                        }}>
+                            <AntDesign name='star' color={COLORS.black} size={18}/>
+                            <Text style={{fontSize: 15, color: COLORS.black, fontWeight: 'bold', marginLeft: 5,}}>{data.rating}</Text>
                         </View>
                     </View>
                 </View>
@@ -86,7 +147,7 @@ const Home = () => {
             height: '100%',
             backgroundColor: COLORS.white
         }}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{
                     width: '100%',
                     height: '100%',
@@ -161,8 +222,21 @@ const Home = () => {
                         color: COLORS.black
                     }}>Popular</Text>
                     {
-                        Categories[currentSelected].items.map(renderItems)
+                        Categories[currentSelected].items.map((item, index) => renderItems(item,index))
                     }
+                    <TouchableOpacity style={{
+                            margin: 30,
+                            justifyContent: 'center',
+                            alignItems: 'center', 
+                            opacity: 0.5
+                        }}>
+                        <Text style={{
+                            fontSize:16,
+                            color: COLORS.black,
+                            borderBottomWidth: 1,
+                            borderBottomColor: COLORS.black,
+                        }}>Load More</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </View>

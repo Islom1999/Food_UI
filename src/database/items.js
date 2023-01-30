@@ -9,7 +9,7 @@ export const COLORS = {
 
 export const Categories = [
     {
-        name: 'Burger',
+        name: 'Burger', 
         image: require('../database/images/burger.png'),
         items:[
             {
